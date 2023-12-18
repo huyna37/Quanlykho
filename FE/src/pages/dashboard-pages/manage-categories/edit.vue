@@ -36,7 +36,7 @@ import { mapState } from 'vuex';
 
 
 export default {
-    name: 'edit-settings',
+    name: 'edit-categories',
     computed: {
         ...mapState({
             baseUrl: state => state.app.baseUrl,

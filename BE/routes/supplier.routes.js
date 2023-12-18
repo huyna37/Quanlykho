@@ -6,5 +6,6 @@ router.get('/:pageIndex/:pageSize', controller.getAll);
 router.post('', controller.create);
 router.put('/:id', controller.update);
 router.delete('/:id', controller.delete);
+router.get('', controller.get);
 
 module.exports = router;

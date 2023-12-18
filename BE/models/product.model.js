@@ -3,10 +3,10 @@ const { default: mongoose } = require("mongoose");
 const schema = new mongoose.Schema({
     name: String,
     description: String,
+    priceInput: Number,
+    priceOutput: Number,
     amount: Number,
-    available: Number,
-    soldAmount: Number,
-    price: String,
+    amountAvailable: Number,
     supplier: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Supplier'

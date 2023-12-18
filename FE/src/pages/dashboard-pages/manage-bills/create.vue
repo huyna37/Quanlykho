@@ -1,10 +1,10 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal fade" id="billsModal" tabindex="-1" role="dialog" aria-labelledby="billsModalLabel" aria-hidden="true">
         <form class="modal-dialog modal-dialog-centered" role="document" v-on:submit.prevent="create">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="settingsModalLabel">Tạo Mới Thể Loại </h5>
+                    <h5 class="modal-title" id="billsModalLabel">Tạo Mới Thể Loại </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -36,7 +36,7 @@ import { mapState } from 'vuex';
 
 
 export default {
-    name: 'create-settings',
+    name: 'create-bills',
     computed: {
         ...mapState({
             baseUrl: state => state.app.baseUrl,

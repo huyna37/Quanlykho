@@ -65,7 +65,7 @@
                             <td class="align-middle text-center text-sm text-secondary">
                                 {{ value.createAt.formatDate("DD/MM/YYYY") }}
                             </td>
-                            <td class="align-middle text-center dropdown">
+                            <td class="align-middle text-center dropdown" @click="view(value)">
                                 <button :id="'dropdownMenuButton-' + value._id"
                                     class="text-secondary text-xs fw-bold btn m-1" data-bs-toggle="dropdown"
                                     aria-expanded="false">Thông tin</button>
@@ -99,7 +99,8 @@ export default {
     name: "manage-products",
     data() {
         return {
-            data: []
+            data: [],
+            selectedValue: null
         };
     },
     computed: {
@@ -114,6 +115,9 @@ export default {
         await this.getAll();
     },
     methods: {
+        view(user) {
+            this.selectedValue = user;
+        },
         async remove(value) {
             try {
                 await instance.delete("products/" + value._id);

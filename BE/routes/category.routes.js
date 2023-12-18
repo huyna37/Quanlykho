@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/product.controller');
+const controller = require('../controllers/category.controller');
 
+router.get('', controller.get);
 router.get('/:pageIndex/:pageSize', controller.getAll);
 router.post('', controller.create);
 router.put('/:id', controller.update);

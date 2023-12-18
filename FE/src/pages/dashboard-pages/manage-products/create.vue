@@ -1,34 +1,51 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
         <form class="modal-dialog modal-dialog-centered" role="document" v-on:submit.prevent="create">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="settingsModalLabel"> Tạo Mới Data </h5>
+                    <h5 class="modal-title" id="productModalLabel"> Tạo Mới Sản Phẩm </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control" required v-model="title" placeholder="Mô tả">
+                <div class="modal-body row">
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Tên</label>
+                        <input type="text" class="form-control" required v-model="name" placeholder="Tên Sản Phẩm">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Price</label>
-                        <input type="text" class="form-control" required v-model="price" placeholder="Key">
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Mô Tả</label>
+                        <input type="text" class="form-control" required v-model="description" placeholder="Mô Tả Sản Phẩm">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Duration</label>
-                        <input type="text" class="form-control" required v-model="duration" placeholder="Value">
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Giá Nhập</label>
+                        <input type="number" class="form-control" required v-model="priceInput" placeholder="Giá Nhập">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Type Data</label>
-                        <input type="text" class="form-control" required v-model="type" placeholder="Value">
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Giá Bán</label>
+                        <input type="number" class="form-control" required v-model="priceOutput" placeholder="Giá Bán">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Info JSON</label>
-                        <input type="text" class="form-control" required v-model="otherInfor" placeholder="Value">
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Số Lượng Nhập</label>
+                        <input type="number" class="form-control" required v-model="amount" placeholder="Số Lượng Sản Phẩm Đã Nhập">
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Số Lượng Còn lại</label>
+                        <input type="number" class="form-control" required v-model="amountAvailable" placeholder="Số Lượng Sản Phẩm Còn lại">
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Nhà Cung Cấp</label>
+                        <select v-model="supplierId" class="form-control">
+                            <option v-for="supplier in suppliers" :value="supplier._id" v-bind:key="supplier._id">{{ supplier.name }}</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 col-6">
+                        <label class="form-label">Thể Loại</label>
+                        <select v-model="categoryId" class="form-control">
+                            <option v-for="category in categories" :value="category._id" v-bind:key="category._id">{{ category.name }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -46,9 +63,8 @@ import { commonMessage } from '@/Unilities/common';
 import swal from 'sweetalert';
 import { mapState } from 'vuex';
 
-
 export default {
-    name: 'create-settings',
+    name: 'create-products',
     computed: {
         ...mapState({
             baseUrl: state => state.app.baseUrl,
@@ -59,17 +75,24 @@ export default {
     },
     data() {
         return {
-            title: '',
-            price: '',
-            duration: '',
-            type: '',
-            otherInfor: ''
+            name: '',
+            description: '',
+            priceInput: '',
+            priceOutput: '',
+            amount: '',
+            supplierId: '',
+            categoryId: '',
+            suppliers: [],
+            categories: []
         }
+    },
+    async created(){
+        await Promise.all([this.getSuppliers(), this.getCategories()]);
     },
     methods: {
         async create() {
             try {
-                const baseUrl = 'listData';
+                const baseUrl = 'products';
                 const data = {
                     title: this.title,
                     price: this.price,
@@ -89,8 +112,26 @@ export default {
                     swal('Oops!',commonMessage, 'error');
                 }
             }
+        },
+        async getSuppliers(){
+            try {
+                const baseUrl = 'suppliers';
+                var result = await instance.get(baseUrl);
+                this.suppliers = result.data.result;
+            } catch (ex) {
+                console.log(ex)
+            }
+        },
+        async getCategories(){
+            try {
+                const baseUrl = 'categories';
+                var result = await instance.get(baseUrl);
+                this.categories = result.data.result;
+            } catch (ex) {
+               console.log(ex)
+            }
         }
-    }
+    },
 }
 </script>
   

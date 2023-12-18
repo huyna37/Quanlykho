@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header pb-0">
+                <div class="card-header pb-0 d-flex justify-content-between">
                     <h6>Quản Lý Người Dùng</h6>
                     <button class="btn" data-bs-toggle="modal" data-bs-target="#userModal">Tạo mới</button>
                 </div>
@@ -65,7 +65,7 @@
                         </table>
                         <Paginate @page-change="updatePaginate" :currentPage="pageIndex" :totalPages="totalPages" />
                     </div>
-                    <create />
+                    <create @create="getUserPaginate"/>
                 </div>
             </div>
         </div>

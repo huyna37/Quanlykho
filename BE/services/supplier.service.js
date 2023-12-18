@@ -8,6 +8,10 @@ const create = async (req) => {
   return await Supplier.create(req);
 };
 
+const get = async (req) => {
+  return await Supplier.find();
+}
+
 const update = async (id, body) => {
   await Supplier.findByIdAndUpdate(id, body);
   return true;
@@ -40,4 +44,4 @@ const getBySlug = async (req) => {
   return result;
 };
 
-module.exports = { create, update, remove, getAll, getBySlug };
+module.exports = { create, update, remove, getAll, getBySlug, get };

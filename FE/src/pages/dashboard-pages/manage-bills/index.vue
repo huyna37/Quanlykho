@@ -74,7 +74,7 @@ import instance from '@/Unilities/axios';
 import create from './create.vue';
 import Paginate from '@/shared/paginate.vue';
 export default {
-    name: "manage-listData",
+    name: "manage-bill",
     data() {
         return {
             data: '',

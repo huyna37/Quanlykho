@@ -2,6 +2,7 @@ const DashboardLayout = () => import("@/layouts/dashboard-layout.vue");
 const User = () => import("@/pages/dashboard-pages/manage-users/index.vue");
 const Category = () => import("@/pages/dashboard-pages/manage-categories");
 const Product = () => import("@/pages/dashboard-pages/manage-products/index.vue");
+const Bill = () => import("@/pages/dashboard-pages/manage-bills/index.vue");
 const Supplier = () => import("@/pages/dashboard-pages/manage-suppliers/index.vue");
 
 const AuthLayout = () => import("@/layouts/auth-layout.vue");
@@ -16,10 +17,21 @@ export const routerDashboard = {
     {
       path: "/",
       component: Product,
-      name: "Product",
       meta: {
         title: "Quản lý sản phẩm",
-        icon: "fa-solid fa-users text-success",
+        icon: "fa-solid fa-gift text-primary",
+        affix: true,
+        // role: "admin",
+        // requireAuth: true,
+        // area: ["user", "admin"],
+      },
+    },
+    {
+      path: "/bill",
+      component: Bill,
+      meta: {
+        title: "Quản lý Hóa Đơn",
+        icon: "fa-solid fa-money-bills text-warning",
         affix: true,
         // role: "admin",
         // requireAuth: true,
@@ -29,10 +41,9 @@ export const routerDashboard = {
     {
       path: "/supplier",
       component: Supplier,
-      name: "supplier",
       meta: {
         title: "Quản lý nhà cung cấp",
-        icon: "fa-solid fa-users text-success",
+        icon: "fa-solid fa-truck-field text-info",
         affix: true,
         // role: "admin",
         // requireAuth: true,
@@ -42,10 +53,9 @@ export const routerDashboard = {
     {
       path: "/category",
       component: Category,
-      name: "category",
       meta: {
         title: "Quản lý thể loại",
-        icon: "fa-solid fa-users text-success",
+        icon: "fa-solid fa-list text-danger",
         affix: true,
         // role: "admin",
         // requireAuth: true,
@@ -55,7 +65,6 @@ export const routerDashboard = {
     {
       path: "/user",
       component: User,
-      name: "manageUsers",
       meta: {
         title: "Quản lý người dùng",
         icon: "fa-solid fa-users text-success",
