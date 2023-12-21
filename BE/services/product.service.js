@@ -23,6 +23,11 @@ const remove = async (req) => {
 };
 
 const getAll = async (req) => {
+  const populateOptions = [
+    { path: 'category', select: '' },
+    { path: 'supplier', select: '' },
+  ];
+  req.query.populateOptions = populateOptions;
   const data = await Paginate(
     req.query.page,
     req.query.limit,

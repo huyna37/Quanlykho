@@ -8,9 +8,6 @@ const Paginate = async (page = 0, limit, model, req) => {
     if (filterOptions?.isObjectString(filterOptions)) {
       filterOptions = JSON.parse(filterOptions);
     }
-    if (populateOptions?.isObjectString(populateOptions)) {
-      populateOptions = JSON.parse(populateOptions);
-    }
     if (filter?.isObjectString(filter)) {
       filter = JSON.parse(filter);
     }

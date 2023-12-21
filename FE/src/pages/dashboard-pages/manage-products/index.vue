@@ -22,7 +22,10 @@
                                 Số Lượng</th>
                             <th
                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
-                                Giá</th>
+                                Giá Nhập</th>
+                            <th
+                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                                Giá Bán</th>
                             <th
                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
                                 Nhà Cung Cấp</th>
@@ -48,19 +51,25 @@
                                 <span class="text-secondary text-sm fw-bold">{{ index + 1 }}</span>
                             </td>
                             <td class="align-middle text-center">
+                                <span class="text-secondary text-sm fw-bold">{{ value.name }}</span>
+                            </td>
+                            <td class="align-middle text-center">
                                 <span class="text-secondary text-sm fw-bold">{{ value.description }}</span>
                             </td>
                             <td class="align-middle text-center">
                                 <span class="text-secondary text-sm fw-bold">{{ value.amount }}</span>
                             </td>
                             <td class="align-middle text-center">
-                                <span class="text-secondary text-sm fw-bold">{{ value.price }}</span>
+                                <span class="text-secondary text-sm fw-bold">{{ value.priceInput }}</span>
                             </td>
                             <td class="align-middle text-center">
-                                <span class="text-secondary text-sm fw-bold">{{ value.supplier }}</span>
+                                <span class="text-secondary text-sm fw-bold">{{ value.priceOutput }}</span>
                             </td>
                             <td class="align-middle text-center">
-                                <span class="text-secondary text-sm fw-bold">{{ value.category }}</span>
+                                <span class="text-secondary text-sm fw-bold">{{ value.supplier.name }}</span>
+                            </td>
+                            <td class="align-middle text-center">
+                                <span class="text-secondary text-sm fw-bold">{{ value.category.name }}</span>
                             </td>
                             <td class="align-middle text-center text-sm text-secondary">
                                 {{ value.createAt.formatDate("DD/MM/YYYY") }}
@@ -72,7 +81,7 @@
                                 <ul class="dropdown-menu dropdown-menu-vps"
                                     :aria-labelledby="'dropdownMenuButton-' + value._id">
                                     <li class="cursor-pointer">
-                                        <div class="dropdown-item" @click="remove(value)">Update</div>
+                                        <div class="dropdown-item" data-bs-toggle="modal" data-bs-target="#productEditModal">Update</div>
                                     </li>
                                     <li class="cursor-pointer">
                                         <div class="dropdown-item" @click="remove(value)">Xoá</div>
@@ -100,7 +109,10 @@ export default {
     data() {
         return {
             data: [],
-            selectedValue: null
+            selectedValue: null,
+            totalPages: 0,
+            pageIndex: 0,
+            limit: 10
         };
     },
     computed: {
@@ -112,7 +124,7 @@ export default {
         }),
     },
     async created() {
-        await this.getAll();
+        await this.getPaginate();
     },
     methods: {
         view(user) {
@@ -121,7 +133,7 @@ export default {
         async remove(value) {
             try {
                 await instance.delete("products/" + value._id);
-                await this.getAll();
+                await this.getPaginate();
             }
             catch (ex) {
                 if (ex.response?.data?.message != "jwt expired") {
@@ -132,10 +144,12 @@ export default {
                 }
             }
         },
-        async getAll() {
+        async getPaginate() {
             try {
-                const result = await instance.get("products/1/10");
-                this.data = result.data.docs;
+                const baseUrl = `products/${this.pageIndex}/${this.limit}`;
+                const result = await instance.get(baseUrl);
+                this.data = result.data.result.data;
+                this.totalPages = Math.ceil(result.data.result.totalItems / this.limit);
             }
             catch (ex) {
                 if (ex.response?.data?.message != "jwt expired") {

@@ -29,7 +29,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="closeEditButtonListData" type="button" data-bs-dismiss="modal" class="btn bg-gradient-secondary">Đóng</button>
-                    <button type="submit" class="btn bg-gradient-primary">Tạo</button>
+                    <button type="submit" class="btn bg-gradient-primary">Cập Nhật</button>
                 </div>
             </div>
         </form>

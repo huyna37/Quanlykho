@@ -1,10 +1,10 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal fade" id="productEditModal" tabindex="-1" role="dialog" aria-labelledby="productEditLabel" aria-hidden="true">
         <form class="modal-dialog modal-dialog-centered" role="document" v-on:submit.prevent="create">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel"> Tạo Mới Sản Phẩm </h5>
+                    <h5 class="modal-title" id="productEditLabel"> Cập nhật Sản Phẩm </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="closeButtonListData" type="button" data-bs-dismiss="modal" class="btn bg-gradient-secondary">Đóng</button>
-                    <button type="submit" class="btn bg-gradient-primary">Tạo</button>
+                    <button type="submit" class="btn bg-gradient-primary">Cập Nhật</button>
                 </div>
             </div>
         </form>
@@ -60,7 +60,7 @@ import swal from 'sweetalert';
 import { mapState } from 'vuex';
 
 export default {
-    name: 'create-products',
+    name: 'edit-products',
     computed: {
         ...mapState({
             baseUrl: state => state.app.baseUrl,
@@ -107,7 +107,7 @@ export default {
                 }
                 await instance.post(baseUrl, data);
                 document.getElementById('closeButtonListData').click();
-                swal('Yup','Tạo Thành Công !!','success');
+                swal('Yup','Cập nhật Thành Công !!','success');
                 this.$emit('create');
             } catch (ex) {
                 if (ex.response?.data?.message != 'jwt expired') {
